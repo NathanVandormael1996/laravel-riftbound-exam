@@ -20,6 +20,26 @@ new #[Layout('layouts.app')] class extends Component
         $this->order->update(['status' => $status]);
         $this->dispatch('notify', ['type' => 'success', 'message' => "Order status updated to {$status}."]);
     }
+
+    public function refundOrder()
+    {
+        $success = app(\App\Services\StripeService::class)->refundOrder($this->order);
+
+        if ($success) {
+            $this->order->update(['status' => OrderStatus::REFUNDED]);
+            
+            // Restock items
+            foreach ($this->order->items as $item) {
+                if ($item->product) {
+                    $item->product->increment('stock', $item->quantity);
+                }
+            }
+
+            $this->dispatch('notify', ['type' => 'success', 'message' => 'Order successfully refunded. Items restocked.']);
+        } else {
+            $this->dispatch('notify', ['type' => 'error', 'message' => 'Failed to process refund. Check logs.']);
+        }
+    }
 }; ?>
 
 <div class="min-h-screen py-16">
@@ -52,6 +72,17 @@ new #[Layout('layouts.app')] class extends Component
                     </button>
                 @endforeach
             </div>
+
+            {{-- Refund Button --}}
+            @if($this->order->status === \App\Enums\OrderStatus::PAID)
+                <button 
+                    wire:click="refundOrder" 
+                    wire:confirm="Are you sure you want to refund this order? This will return the money to the client and restock the cards."
+                    class="btn-sentry-primary bg-sentry-pink hover:bg-sentry-pink/80 px-6 py-2 text-[10px] uppercase tracking-[2px] shadow-[0_0_20px_rgba(240,111,151,0.2)]"
+                >
+                    Refund Cards
+                </button>
+            @endif
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
