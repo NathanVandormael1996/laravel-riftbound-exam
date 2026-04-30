@@ -1,6 +1,4 @@
 <?php
-
-
 use App\Models\Order;
 use App\Enums\OrderStatus;
 use Livewire\Attributes\Computed;
@@ -8,14 +6,10 @@ use Livewire\Attributes\Url;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
-
 new #[Layout('layouts.app')] class extends Component
 {
     use WithPagination;
-
-    #[Url(history: true)]
     public $status = '';
-
     #[Computed]
     public function orders()
     {
@@ -25,22 +19,17 @@ new #[Layout('layouts.app')] class extends Component
             ->paginate(15);
     }
 }; ?>
-
 <div class="min-h-screen py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {{-- Header --}}
         <div class="mb-10">
             <div class="flex items-center gap-2 mb-4">
-                <a href="{{ route('admin.dashboard') }}" class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-30 hover:opacity-70 transition-opacity">Command Center</a>
+                <a href="{{ route('admin.dashboard') }}" wire:navigate class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-30 hover:opacity-70 transition-opacity">Command Center</a>
                 <span class="text-sentry-border">/</span>
                 <span class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-80">Acquisition Log</span>
             </div>
             <h1 class="font-display text-5xl font-bold text-white">Acquisition Log</h1>
             <p class="mt-2 text-sentry-light opacity-50 text-sm">All incoming orders across the Riftbound marketplace.</p>
         </div>
-
-        {{-- Status Filter Tabs --}}
         <div class="flex flex-wrap items-center gap-2 mb-6">
             <button wire:click="$set('status', '')"
                     class="font-mono text-[10px] uppercase tracking-[2px] px-4 py-2 rounded-full border transition-all duration-150 {{ $this->status === '' ? 'border-sentry-light/50 bg-sentry-light/10 text-sentry-light' : 'border-sentry-border text-sentry-light opacity-40 hover:opacity-80 hover:border-sentry-border' }}">
@@ -58,8 +47,6 @@ new #[Layout('layouts.app')] class extends Component
                 </button>
             @endforeach
         </div>
-
-        {{-- Orders Table --}}
         <div class="bg-sentry-darker border border-sentry-border rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
             <table class="w-full">
                 <thead>
@@ -89,7 +76,7 @@ new #[Layout('layouts.app')] class extends Component
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <a href="{{ route('admin.orders.show', $order) }}"
+                                <a href="{{ route('admin.orders.show', $order) }}" wire:navigate
                                    class="text-sentry-border group-hover:text-sentry-light transition-colors">
                                     <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                                 </a>
@@ -104,13 +91,11 @@ new #[Layout('layouts.app')] class extends Component
                     @endforelse
                 </tbody>
             </table>
-
             @if($this->orders->hasPages())
                 <div class="px-6 py-4 border-t border-sentry-border/50 bg-sentry-deep/30">
                     {{ $this->orders->links() }}
                 </div>
             @endif
         </div>
-
     </div>
 </div>

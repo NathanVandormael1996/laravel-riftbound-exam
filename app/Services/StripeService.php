@@ -1,18 +1,14 @@
 <?php
-
 namespace App\Services;
-
 use App\Models\Order;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
-
 class StripeService
 {
     public function __construct()
     {
         Stripe::setApiKey(config('services.stripe.secret'));
     }
-
     public function createCheckoutSession(Order $order): string
     {
         $lineItems = $order->items->map(function ($item) {
@@ -27,7 +23,6 @@ class StripeService
                 'quantity' => $item->quantity,
             ];
         })->toArray();
-
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
@@ -41,22 +36,18 @@ class StripeService
                 'customer_email' => $order->billing_email,
             ],
         ]);
-
         return $session->url;
     }
-
     public function verifyPayment(string $sessionId): bool
     {
         $session = Session::retrieve($sessionId);
         return $session->payment_status === 'paid';
     }
-
     public function refundOrder(Order $order): bool
     {
         if (!$order->stripe_payment_intent_id) {
             return false;
         }
-
         try {
             \Stripe\Refund::create([
                 'payment_intent' => $order->stripe_payment_intent_id,

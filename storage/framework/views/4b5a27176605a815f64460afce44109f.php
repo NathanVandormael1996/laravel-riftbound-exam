@@ -12,7 +12,6 @@ use Livewire\Volt\Component;
             <h1 class="font-display text-4xl font-bold text-white mb-2">Acquisition History</h1>
             <p class="text-sentry-light opacity-60 uppercase tracking-[2px] text-xs">All deployments to your collection</p>
         </div>
-
         <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->orders->isEmpty()): ?>
             <div class="sentry-glass p-16 text-center">
                 <div class="w-20 h-20 bg-sentry-deep border border-sentry-border rounded-full mx-auto flex items-center justify-center mb-6">
@@ -52,14 +51,12 @@ use Livewire\Volt\Component;
                                     </div>
                                 </div>
                             </div>
-
                             <div class="flex items-center gap-4">
                                 <a href="<?php echo e(route('orders.show', $order)); ?>" wire:navigate class="btn-sentry-secondary px-6 py-2 text-xs">
                                     View Dossier
                                 </a>
                             </div>
                         </div>
-                        
                         <!-- Mini items preview -->
                         <div class="bg-sentry-darker/50 border-t border-sentry-border px-6 py-4 flex gap-4 overflow-x-auto">
                             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php $__currentLoopData = $order->items->take(5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

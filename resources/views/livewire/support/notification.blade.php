@@ -1,31 +1,22 @@
 <?php
-
 use Livewire\Volt\Component;
-
 new class extends Component
 {
     public $notifications = [];
-
-    #[Livewire\Attributes\On('notify')]
     public function addNotification($payload)
     {
         $id = uniqid();
-        
         $this->notifications[$id] = [
             'type' => $payload['type'] ?? 'success',
             'message' => $payload['message'] ?? '',
         ];
-
-        // Auto-remove after 5 seconds
         $this->dispatch('remove-notification', id: $id)->self();
     }
-
     public function removeNotification($id)
     {
         unset($this->notifications[$id]);
     }
 }; ?>
-
 <div 
     x-data="{ notifications: @entangle('notifications') }"
     class="fixed bottom-8 right-8 z-[100] flex flex-col space-y-4 pointer-events-none"

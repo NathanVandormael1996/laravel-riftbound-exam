@@ -11,8 +11,6 @@ use Livewire\Volt\Component;
 
 <div class="min-h-screen py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        
         <div class="mb-14">
             <div class="flex items-center gap-3 mb-3">
                 <div class="w-2 h-2 rounded-full bg-sentry-light animate-pulse"></div>
@@ -25,10 +23,7 @@ use Livewire\Volt\Component;
                 Real-time overview of the Riftbound marketplace. All sectors operational.
             </p>
         </div>
-
-        
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
-            
             <div class="relative bg-sentry-darker border border-sentry-border rounded-xl p-6 shadow-[0_10px_40px_rgba(0,0,0,0.3)] overflow-hidden group hover:border-sentry-light/40 transition-all duration-300">
                 <div class="absolute inset-0 bg-gradient-to-br from-sentry-light/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div class="relative z-10">
@@ -37,8 +32,6 @@ use Livewire\Volt\Component;
                     <p class="font-mono text-[10px] text-sentry-light opacity-30 mt-2">all confirmed orders</p>
                 </div>
             </div>
-
-            
             <div class="relative bg-sentry-darker border border-sentry-border rounded-xl p-6 shadow-[0_10px_40px_rgba(0,0,0,0.3)] overflow-hidden group hover:border-sentry-purple/40 transition-all duration-300">
                 <div class="absolute inset-0 bg-gradient-to-br from-sentry-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div class="relative z-10">
@@ -47,8 +40,6 @@ use Livewire\Volt\Component;
                     <p class="font-mono text-[10px] text-sentry-light opacity-30 mt-2">across all statuses</p>
                 </div>
             </div>
-
-            
             <div class="relative bg-sentry-darker border border-sentry-border rounded-xl p-6 shadow-[0_10px_40px_rgba(0,0,0,0.3)] overflow-hidden group hover:border-sentry-light/20 transition-all duration-300">
                 <div class="absolute inset-0 bg-gradient-to-br from-sentry-light/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div class="relative z-10">
@@ -57,8 +48,6 @@ use Livewire\Volt\Component;
                     <p class="font-mono text-[10px] text-sentry-light opacity-30 mt-2">in the marketplace</p>
                 </div>
             </div>
-
-            
             <div class="relative bg-sentry-darker border border-sentry-border rounded-xl p-6 shadow-[0_10px_40px_rgba(0,0,0,0.3)] overflow-hidden group hover:border-sentry-coral/20 transition-all duration-300">
                 <div class="absolute inset-0 bg-gradient-to-br from-sentry-coral/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div class="relative z-10">
@@ -68,19 +57,15 @@ use Livewire\Volt\Component;
                 </div>
             </div>
         </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-            
             <div class="lg:col-span-2">
                 <div class="flex justify-between items-center mb-5">
                     <h2 class="font-mono text-[11px] uppercase tracking-[3px] text-sentry-light opacity-70">Recent Acquisitions</h2>
-                    <a href="<?php echo e(route('admin.orders.index')); ?>" class="font-mono text-[10px] uppercase tracking-widest text-sentry-light hover:text-white transition-colors flex items-center gap-1">
+                    <a href="<?php echo e(route('admin.orders.index')); ?>" wire:navigate class="font-mono text-[10px] uppercase tracking-widest text-sentry-light hover:text-white transition-colors flex items-center gap-1">
                         View All
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </a>
                 </div>
-
                 <div class="bg-sentry-darker border border-sentry-border rounded-xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.3)]">
                     <table class="w-full">
                         <thead>
@@ -109,7 +94,7 @@ use Livewire\Volt\Component;
                                         </span>
                                     </td>
                                     <td class="px-5 py-4 text-right">
-                                        <a href="<?php echo e(route('admin.orders.show', $order)); ?>" class="text-sentry-border group-hover:text-sentry-light transition-colors">
+                                        <a href="<?php echo e(route('admin.orders.show', $order)); ?>" wire:navigate class="text-sentry-border group-hover:text-sentry-light transition-colors">
                                             <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                                         </a>
                                     </td>
@@ -119,12 +104,10 @@ use Livewire\Volt\Component;
                     </table>
                 </div>
             </div>
-
-            
             <div>
                 <h2 class="font-mono text-[11px] uppercase tracking-[3px] text-sentry-light opacity-70 mb-5">Management Ops</h2>
                 <div class="space-y-4">
-                    <a href="<?php echo e(route('admin.products.create')); ?>" class="group block relative bg-sentry-darker border border-sentry-border rounded-xl p-5 hover:border-sentry-light/50 transition-all duration-300 overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
+                    <a href="<?php echo e(route('admin.products.create')); ?>" wire:navigate class="group block relative bg-sentry-darker border border-sentry-border rounded-xl p-5 hover:border-sentry-light/50 transition-all duration-300 overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
                         <div class="absolute top-0 right-0 w-20 h-20 bg-sentry-light/5 rounded-full blur-xl group-hover:bg-sentry-light/15 transition-all duration-500 -translate-y-1/2 translate-x-1/2"></div>
                         <div class="relative">
                             <div class="w-8 h-8 rounded-lg bg-sentry-light/10 border border-sentry-light/20 flex items-center justify-center mb-3 group-hover:bg-sentry-light/20 transition-colors">
@@ -134,8 +117,7 @@ use Livewire\Volt\Component;
                             <p class="text-[11px] text-sentry-light opacity-40">Add a new card to the marketplace.</p>
                         </div>
                     </a>
-
-                    <a href="<?php echo e(route('admin.products.index')); ?>" class="group block relative bg-sentry-darker border border-sentry-border rounded-xl p-5 hover:border-sentry-purple/50 transition-all duration-300 overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
+                    <a href="<?php echo e(route('admin.products.index')); ?>" wire:navigate class="group block relative bg-sentry-darker border border-sentry-border rounded-xl p-5 hover:border-sentry-purple/50 transition-all duration-300 overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
                         <div class="absolute top-0 right-0 w-20 h-20 bg-sentry-purple/5 rounded-full blur-xl group-hover:bg-sentry-purple/15 transition-all duration-500 -translate-y-1/2 translate-x-1/2"></div>
                         <div class="relative">
                             <div class="w-8 h-8 rounded-lg bg-sentry-purple/10 border border-sentry-purple/20 flex items-center justify-center mb-3 group-hover:bg-sentry-purple/20 transition-colors">
@@ -145,8 +127,7 @@ use Livewire\Volt\Component;
                             <p class="text-[11px] text-sentry-light opacity-40">Manage existing cards and pricing.</p>
                         </div>
                     </a>
-
-                    <a href="<?php echo e(route('admin.categories.index')); ?>" class="group block relative bg-sentry-darker border border-sentry-border rounded-xl p-5 hover:border-sentry-light/20 transition-all duration-300 overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
+                    <a href="<?php echo e(route('admin.categories.index')); ?>" wire:navigate class="group block relative bg-sentry-darker border border-sentry-border rounded-xl p-5 hover:border-sentry-light/20 transition-all duration-300 overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
                         <div class="absolute top-0 right-0 w-20 h-20 bg-sentry-light/5 rounded-full blur-xl group-hover:bg-sentry-light/10 transition-all duration-500 -translate-y-1/2 translate-x-1/2"></div>
                         <div class="relative">
                             <div class="w-8 h-8 rounded-lg bg-sentry-light/10 border border-sentry-light/20 flex items-center justify-center mb-3 group-hover:bg-sentry-light/20 transition-colors">
@@ -156,8 +137,7 @@ use Livewire\Volt\Component;
                             <p class="text-[11px] text-sentry-light opacity-40">Control faction categories.</p>
                         </div>
                     </a>
-
-                    <a href="<?php echo e(route('admin.orders.index')); ?>" class="group block relative bg-sentry-darker border border-sentry-border rounded-xl p-5 hover:border-sentry-coral/30 transition-all duration-300 overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
+                    <a href="<?php echo e(route('admin.orders.index')); ?>" wire:navigate class="group block relative bg-sentry-darker border border-sentry-border rounded-xl p-5 hover:border-sentry-coral/30 transition-all duration-300 overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.2)]">
                         <div class="absolute top-0 right-0 w-20 h-20 bg-sentry-coral/5 rounded-full blur-xl group-hover:bg-sentry-coral/10 transition-all duration-500 -translate-y-1/2 translate-x-1/2"></div>
                         <div class="relative">
                             <div class="w-8 h-8 rounded-lg bg-sentry-coral/10 border border-sentry-coral/20 flex items-center justify-center mb-3 group-hover:bg-sentry-coral/20 transition-colors">
@@ -169,7 +149,6 @@ use Livewire\Volt\Component;
                     </a>
                 </div>
             </div>
-
         </div>
     </div>
 </div><?php /**PATH /srv/http/laravel-riftbound-exam/resources/views/livewire/pages/admin/dashboard.blade.php ENDPATH**/ ?>

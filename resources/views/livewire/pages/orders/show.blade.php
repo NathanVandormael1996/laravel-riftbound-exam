@@ -1,24 +1,18 @@
 <?php
-
 use App\Models\Order;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
-
 new #[Layout('layouts.app')] class extends Component
 {
     public Order $order;
-
     public function mount(Order $order)
     {
         $this->order = $order->load('items.product');
-        
-        // Ensure user can only see their own orders
         if ($this->order->user_id !== auth()->id()) {
             abort(403);
         }
     }
 }; ?>
-
 <div class="py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-8 flex items-center justify-between">
@@ -31,14 +25,12 @@ new #[Layout('layouts.app')] class extends Component
                 <span class="sentry-badge border-sentry-purple text-sentry-purple">{{ $order->status->value }}</span>
             </div>
         </div>
-
         <div class="space-y-8">
             <div class="sentry-card p-8 md:p-12 relative overflow-hidden">
                 <!-- Watermark -->
                 <div class="absolute top-0 right-0 p-8 opacity-[0.03] select-none pointer-events-none">
                     <div class="text-8xl font-display font-bold">RIFTBOUND</div>
                 </div>
-
                 <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div class="space-y-6">
                         <div>
@@ -46,7 +38,6 @@ new #[Layout('layouts.app')] class extends Component
                             <p class="font-mono text-3xl font-bold text-white">{{ $order->order_number }}</p>
                             <p class="text-xs text-sentry-light opacity-50 mt-1">Processed on {{ $order->created_at->format('F d, Y \a\t H:i') }}</p>
                         </div>
-
                         <div class="grid grid-cols-2 gap-6">
                             <div>
                                 <h3 class="sentry-label mb-2">Value</h3>
@@ -58,7 +49,6 @@ new #[Layout('layouts.app')] class extends Component
                             </div>
                         </div>
                     </div>
-
                     <div class="space-y-6">
                         <div>
                             <h3 class="sentry-label mb-2">Deployment Target</h3>
@@ -74,7 +64,6 @@ new #[Layout('layouts.app')] class extends Component
                     </div>
                 </div>
             </div>
-
             <div class="sentry-glass overflow-hidden">
                 <div class="p-6 border-b border-sentry-border bg-sentry-deep/40">
                     <h2 class="sentry-label">Manifest of Contents</h2>

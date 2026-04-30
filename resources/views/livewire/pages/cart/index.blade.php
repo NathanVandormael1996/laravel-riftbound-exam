@@ -1,11 +1,8 @@
 <?php
-
-
 use App\Services\CartService;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
-
 new #[Layout('layouts.app')] class extends Component
 {
     #[Computed]
@@ -13,7 +10,6 @@ new #[Layout('layouts.app')] class extends Component
     {
         return app(CartService::class)->getCart()->load('items.product');
     }
-
     public function increment(int $productId)
     {
         try {
@@ -25,22 +21,18 @@ new #[Layout('layouts.app')] class extends Component
             ]);
         }
     }
-
     public function decrement(int $productId)
     {
         app(CartService::class)->updateQuantity($productId, $this->cart->items->firstWhere('product_id', $productId)->quantity - 1);
     }
-
     public function remove(int $productId)
     {
         app(CartService::class)->removeItem($productId);
     }
 }; ?>
-
 <div class="py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-display text-4xl font-bold mb-8">Collection Basket</h1>
-
         @if($this->cart->items->isEmpty())
             <div class="sentry-glass p-12 text-center">
                 <div class="text-sentry-light text-4xl mb-4 font-display">Basket is empty</div>
@@ -62,19 +54,16 @@ new #[Layout('layouts.app')] class extends Component
                                     </div>
                                 @endif
                             </div>
-
                             <div class="flex-grow">
                                 <div class="sentry-label text-[10px] opacity-50">{{ $item->product->category->name }}</div>
                                 <h3 class="text-lg font-bold">{{ $item->product->name }}</h3>
                                 <div class="text-sentry-light font-mono">€{{ number_format($item->product->price, 2) }}</div>
                             </div>
-
                             <div class="flex items-center space-x-3">
                                 <button wire:click="decrement({{ $item->product_id }})" class="w-8 h-8 rounded border border-sentry-border flex items-center justify-center hover:bg-sentry-darker transition-colors">-</button>
                                 <span class="font-mono w-4 text-center">{{ $item->quantity }}</span>
                                 <button wire:click="increment({{ $item->product_id }})" class="w-8 h-8 rounded border border-sentry-border flex items-center justify-center hover:bg-sentry-darker transition-colors">+</button>
                             </div>
-
                             <div class="text-right min-w-[100px]">
                                 <div class="text-lg font-mono font-bold">€{{ number_format($item->subtotal, 2) }}</div>
                                 <button wire:click="remove({{ $item->product_id }})" class="text-[10px] uppercase tracking-widest text-sentry-pink hover:underline">Remove</button>
@@ -82,12 +71,10 @@ new #[Layout('layouts.app')] class extends Component
                         </div>
                     @endforeach
                 </div>
-
                 <!-- Summary -->
                 <aside class="space-y-6">
                     <div class="sentry-card p-6 space-y-6">
                         <h2 class="sentry-label">Order Summary</h2>
-                        
                         <div class="space-y-2">
                             <div class="flex justify-between text-sentry-light opacity-60">
                                 <span>Subtotal</span>
@@ -102,12 +89,10 @@ new #[Layout('layouts.app')] class extends Component
                                 <span class="text-3xl font-mono font-bold text-sentry-light">€{{ number_format($this->cart->total, 2) }}</span>
                             </div>
                         </div>
-
                         <a href="{{ route('checkout.index') }}" wire:navigate class="w-full btn-sentry-primary py-4 block text-center">
                             Initiate Checkout
                         </a>
                     </div>
-
                     <div class="sentry-glass p-4 text-xs text-sentry-light opacity-60 italic">
                         Prices include regional taxes where applicable. Card availability is not guaranteed until checkout is complete.
                     </div>

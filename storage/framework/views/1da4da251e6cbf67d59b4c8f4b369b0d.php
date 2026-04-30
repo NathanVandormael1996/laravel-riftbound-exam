@@ -30,7 +30,6 @@ use Livewire\WithPagination;
                         </div>
                     </div>
                 </div>
-
                 <!-- Categories -->
                 <div class="space-y-3">
                     <label class="sentry-label text-xs">Factions</label>
@@ -52,7 +51,6 @@ use Livewire\WithPagination;
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
                 </div>
-
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->search || $this->categorySlug): ?>
                     <button 
                         wire:click="clearFilters" 
@@ -62,7 +60,6 @@ use Livewire\WithPagination;
                     </button>
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </aside>
-
             <!-- Main Content -->
             <div class="flex-grow">
                 <div class="flex justify-between items-end mb-8">
@@ -74,7 +71,6 @@ use Livewire\WithPagination;
                         Showing <?php echo e($this->products->firstItem() ?? 0); ?> - <?php echo e($this->products->lastItem() ?? 0); ?> of <?php echo e($this->products->total()); ?> results
                     </div>
                 </div>
-
                 <!-- Product Grid -->
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($this->products->isEmpty()): ?>
                     <div class="sentry-glass p-12 text-center">
@@ -93,7 +89,6 @@ use Livewire\WithPagination;
                                             <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                         </div>
                                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
-
                                     <!-- Badge -->
                                     <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if($product->badge->value !== 'none'): ?>
                                         <div class="absolute top-4 right-4 bg-sentry-deep/80 backdrop-blur px-3 py-1 rounded-full border border-sentry-border">
@@ -124,7 +119,6 @@ use Livewire\WithPagination;
                             </a>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                     </div>
-
                     <!-- Pagination -->
                     <div class="mt-12">
                         <?php echo e($this->products->links()); ?>

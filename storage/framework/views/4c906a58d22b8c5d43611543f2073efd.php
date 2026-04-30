@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Actions\Logout;
+use Livewire\Attributes\Computed;
 use Livewire\Volt\Component;
 
 ?>
@@ -16,7 +17,6 @@ use Livewire\Volt\Component;
                         <span class="font-display text-2xl font-bold tracking-tight text-white">Riftbound</span>
                     </a>
                 </div>
-
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <a href="/" wire:navigate class="sentry-label hover:text-white transition-colors <?php echo e(request()->is('/') ? 'text-white border-b-2 border-sentry-light pb-1' : ''); ?>">
@@ -35,7 +35,6 @@ use Livewire\Volt\Component;
                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 </div>
             </div>
-
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
                 <!-- Collection Basket Link -->
                 <a href="<?php echo e(route('cart.index')); ?>" wire:navigate class="relative p-2 text-sentry-light hover:text-white transition-colors group">
@@ -47,7 +46,6 @@ use Livewire\Volt\Component;
                         </span>
                     <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
                 </a>
-
                 <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
                     <div class="flex items-center space-x-4">
                         <div class="text-right">
@@ -67,7 +65,6 @@ use Livewire\Volt\Component;
                     </a>
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             </div>
-
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-sentry-light hover:text-white transition duration-150 ease-in-out">
@@ -79,7 +76,6 @@ use Livewire\Volt\Component;
             </div>
         </div>
     </div>
-
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-sentry-darker border-t border-sentry-border">
         <div class="pt-2 pb-3 space-y-1">
@@ -97,7 +93,6 @@ use Livewire\Volt\Component;
                 <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
             <?php endif; ?><?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if ENDBLOCK]><![endif]--><?php endif; ?>
         </div>
-
         <div class="pt-4 pb-1 border-t border-sentry-border">
             <?php if(\Livewire\Mechanisms\ExtendBlade\ExtendBlade::isRenderingLivewireComponent()): ?><!--[if BLOCK]><![endif]--><?php endif; ?><?php if(auth()->guard()->check()): ?>
                 <div class="px-4 py-3">

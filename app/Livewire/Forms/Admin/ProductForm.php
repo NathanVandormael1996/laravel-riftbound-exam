@@ -1,16 +1,12 @@
 <?php
-
 namespace App\Livewire\Forms\Admin;
-
 use App\Models\Product;
 use App\Enums\ProductBadge;
 use Illuminate\Validation\Rule;
 use Livewire\Form;
-
 class ProductForm extends Form
 {
     public ?Product $product = null;
-
     public $name = '';
     public $slug = '';
     public $description = '';
@@ -21,7 +17,6 @@ class ProductForm extends Form
     public $is_active = true;
     public $is_featured = false;
     public $newImage;
-
     public function setProduct(Product $product)
     {
         $this->product = $product;
@@ -35,7 +30,6 @@ class ProductForm extends Form
         $this->is_active = $product->is_active;
         $this->is_featured = $product->is_featured;
     }
-
     public function rules()
     {
         return [
@@ -51,28 +45,22 @@ class ProductForm extends Form
             'newImage' => ['nullable', 'image', 'max:2048'],
         ];
     }
-
     public function store()
     {
         $this->validate();
-        
         $data = $this->except('product', 'newImage');
         if ($this->newImage) {
             $data['image'] = $this->newImage->store('products', 'public');
         }
-        
         Product::create($data);
     }
-
     public function update()
     {
         $this->validate();
-        
         $data = $this->except('product', 'newImage');
         if ($this->newImage) {
             $data['image'] = $this->newImage->store('products', 'public');
         }
-        
         $this->product->update($data);
     }
 }

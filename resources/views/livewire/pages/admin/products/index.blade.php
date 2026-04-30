@@ -1,25 +1,18 @@
 <?php
-
-
 use App\Models\Product;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
-
 new #[Layout('layouts.app')] class extends Component
 {
     use WithPagination;
-
-    #[Url(history: true)]
     public $search = '';
-
     public function updatingSearch()
     {
         $this->resetPage();
     }
-
     #[Computed]
     public function products()
     {
@@ -29,36 +22,30 @@ new #[Layout('layouts.app')] class extends Component
             ->latest()
             ->paginate(15);
     }
-
     public function deleteProduct(Product $product)
     {
         $product->delete();
         $this->dispatch('notify', ['type' => 'success', 'message' => 'Card deleted successfully.']);
     }
 }; ?>
-
 <div class="min-h-screen py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {{-- Header --}}
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10">
             <div>
                 <div class="flex items-center gap-3 mb-3">
-                    <a href="{{ route('admin.dashboard') }}" class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-40 hover:opacity-80 transition-opacity">Command Center</a>
+                    <a href="{{ route('admin.dashboard') }}" wire:navigate class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-40 hover:opacity-80 transition-opacity">Command Center</a>
                     <span class="text-sentry-border">/</span>
                     <span class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-80">Card Inventory</span>
                 </div>
                 <h1 class="font-display text-5xl font-bold text-white">Card Inventory</h1>
                 <p class="mt-2 text-sentry-light opacity-50 text-sm">Deploy, manage and deactivate cards across all factions.</p>
             </div>
-            <a href="{{ route('admin.products.create') }}"
+            <a href="{{ route('admin.products.create') }}" wire:navigate
                class="shrink-0 bg-sentry-light text-sentry-deep font-mono text-[13px] font-bold uppercase tracking-[1.5px] px-7 py-3 rounded-[13px] shadow-[inset_0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_0.5rem_1.5rem_rgba(208,191,255,0.3)] transition-all duration-200 flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                 Deploy Card
             </a>
         </div>
-
-        {{-- Search --}}
         <div class="relative mb-6 max-w-sm">
             <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                 <svg class="w-4 h-4 text-sentry-light opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -68,8 +55,6 @@ new #[Layout('layouts.app')] class extends Component
                    placeholder="Search cards..."
                    class="w-full bg-sentry-darker border border-sentry-border text-white placeholder-sentry-light/30 rounded-xl pl-11 pr-4 py-3 font-mono text-sm focus:outline-none focus:border-sentry-purple/60 focus:ring-1 focus:ring-sentry-purple/30 transition-colors">
         </div>
-
-        {{-- Table --}}
         <div class="bg-sentry-darker border border-sentry-border rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
             <table class="w-full">
                 <thead>
@@ -108,7 +93,7 @@ new #[Layout('layouts.app')] class extends Component
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-end gap-2">
-                                    <a href="{{ route('admin.products.edit', $product) }}"
+                                    <a href="{{ route('admin.products.edit', $product) }}" wire:navigate
                                        class="p-2 rounded-lg border border-sentry-border text-sentry-light opacity-40 hover:opacity-100 hover:border-sentry-purple/50 hover:text-sentry-light hover:bg-sentry-purple/10 transition-all duration-150">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                     </a>
@@ -129,13 +114,11 @@ new #[Layout('layouts.app')] class extends Component
                     @endforelse
                 </tbody>
             </table>
-
             @if($this->products->hasPages())
                 <div class="px-6 py-4 border-t border-sentry-border/50 bg-sentry-deep/30">
                     {{ $this->products->links() }}
                 </div>
             @endif
         </div>
-
     </div>
 </div>

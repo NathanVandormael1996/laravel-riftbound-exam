@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Actions\Orders;
-
 use App\Models\Cart;
 use App\Models\Order;
 use App\Enums\OrderStatus;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-
 class CreateOrderAction
 {
     public function handle(Cart $cart, array $data): Order
@@ -24,7 +21,6 @@ class CreateOrderAction
                 'shipping_name' => $data['shipping_name'] ?? $data['billing_name'],
                 'shipping_address' => $data['shipping_address'] ?? $data['billing_address'],
             ]);
-
             foreach ($cart->items as $item) {
                 $order->items()->create([
                     'product_id' => $item->product_id,
@@ -34,7 +30,6 @@ class CreateOrderAction
                     'subtotal' => $item->subtotal,
                 ]);
             }
-
             return $order;
         });
     }
