@@ -1,40 +1,32 @@
 <?php
-
-
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
-
 new #[Layout('layouts.app')] class extends Component
 {
     public $name = '';
     public $description = '';
     public $editingId = null;
-
     protected $rules = [
         'name' => 'required|string|max:255',
         'description' => 'required|string',
     ];
-
     #[Computed]
     public function categories()
     {
         return Category::all();
     }
-
     public function edit(Category $category)
     {
         $this->editingId = $category->id;
         $this->name = $category->name;
         $this->description = $category->description;
     }
-
     public function save()
     {
         $this->validate();
-
         if ($this->editingId) {
             Category::find($this->editingId)->update([
                 'name' => $this->name,
@@ -50,26 +42,20 @@ new #[Layout('layouts.app')] class extends Component
             ]);
             $this->dispatch('notify', ['type' => 'success', 'message' => 'Faction deployed!']);
         }
-
         $this->reset(['name', 'description', 'editingId']);
     }
-
     public function delete(Category $category)
     {
         if ($category->products()->exists()) {
             $this->dispatch('notify', ['type' => 'error', 'message' => 'Cannot delete faction with active cards!']);
             return;
         }
-
         $category->delete();
         $this->dispatch('notify', ['type' => 'success', 'message' => 'Faction removed.']);
     }
 }; ?>
-
 <div class="min-h-screen py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {{-- Header --}}
         <div class="mb-10">
             <div class="flex items-center gap-2 mb-4">
                 <a href="{{ route('admin.dashboard') }}" class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-30 hover:opacity-70 transition-opacity">Command Center</a>
@@ -79,10 +65,7 @@ new #[Layout('layouts.app')] class extends Component
             <h1 class="font-display text-5xl font-bold text-white">Faction Management</h1>
             <p class="mt-2 text-sentry-light opacity-50 text-sm">Control the League of Legends faction categories.</p>
         </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-            {{-- Form Panel --}}
             <aside>
                 <div class="bg-sentry-darker border border-sentry-border rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)] sticky top-24">
                     <div class="px-6 py-4 border-b border-sentry-border/50 bg-sentry-deep/40 flex items-center gap-3">
@@ -121,8 +104,6 @@ new #[Layout('layouts.app')] class extends Component
                     </form>
                 </div>
             </aside>
-
-            {{-- Faction List --}}
             <div class="lg:col-span-2 space-y-4">
                 @forelse($this->categories as $category)
                     <div class="group relative bg-sentry-darker border border-sentry-border rounded-xl p-6 shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:border-sentry-border/80 transition-all duration-200 overflow-hidden">
@@ -156,7 +137,6 @@ new #[Layout('layouts.app')] class extends Component
                     </div>
                 @endforelse
             </div>
-
         </div>
     </div>
 </div>

@@ -1,17 +1,13 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Enums\ProductBadge;
-
 class Product extends Model
 {
     use HasFactory, SoftDeletes;
-
     protected $fillable = [
         'category_id',
         'name',
@@ -29,7 +25,6 @@ class Product extends Model
         'is_active',
         'is_featured',
     ];
-
     protected function casts(): array
     {
         return [
@@ -42,19 +37,16 @@ class Product extends Model
             'might' => 'integer',
         ];
     }
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
-
     protected function image(): \Illuminate\Database\Eloquent\Casts\Attribute
     {
         return \Illuminate\Database\Eloquent\Casts\Attribute::make(
             get: fn (?string $value) => $value ? (str_starts_with($value, 'http') ? $value : asset('storage/' . $value)) : null,
         );
     }
-
     public function scopeAvailable($query)
     {
         return $query->where('stock', '>', 0);

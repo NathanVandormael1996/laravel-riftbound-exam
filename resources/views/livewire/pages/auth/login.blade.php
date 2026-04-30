@@ -1,39 +1,26 @@
 <?php
-
 use App\Livewire\Forms\LoginForm;
 use App\Services\CartService;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
-
 new #[Layout('layouts.guest')] class extends Component
 {
     public LoginForm $form;
-
-    /**
-     * Handle an incoming authentication request.
-     */
     public function login(): void
     {
         $this->validate();
-
         $this->form->store();
-
-        // Merge cart after successful login
         app(CartService::class)->mergeSessionCartWithUser();
-
         Session::regenerate();
-
         $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
     }
 }; ?>
-
 <div class="space-y-6">
     <div class="text-center space-y-2">
         <h1 class="text-3xl font-bold font-display tracking-tight text-white">Welcome Back</h1>
         <p class="text-sentry-light opacity-60 text-sm uppercase tracking-widest">Identify yourself to continue</p>
     </div>
-
     <form wire:submit="login" class="space-y-6">
         <!-- Email Address -->
         <div class="space-y-2">
@@ -41,7 +28,6 @@ new #[Layout('layouts.guest')] class extends Component
             <input wire:model="form.email" id="email" type="email" name="email" required autofocus autocomplete="username" class="sentry-input w-full" placeholder="infiltrator@noxus.gov" />
             <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
         </div>
-
         <!-- Password -->
         <div class="space-y-2">
             <div class="flex justify-between items-center">
@@ -55,7 +41,6 @@ new #[Layout('layouts.guest')] class extends Component
             <input wire:model="form.password" id="password" type="password" name="password" required autocomplete="current-password" class="sentry-input w-full" placeholder="••••••••" />
             <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
         </div>
-
         <!-- Remember Me -->
         <div class="flex items-center">
             <label for="remember" class="inline-flex items-center group cursor-pointer">
@@ -63,14 +48,12 @@ new #[Layout('layouts.guest')] class extends Component
                 <span class="ms-3 sentry-label text-[10px] opacity-60 group-hover:opacity-100 transition-opacity">Stay Identified</span>
             </label>
         </div>
-
         <div class="pt-4">
             <button class="w-full btn-sentry-primary py-4">
                 Verify Identity
             </button>
         </div>
     </form>
-
     <div class="pt-6 border-t border-sentry-border/50 text-center space-y-4">
         <div class="sentry-label text-[9px] opacity-40">Alternative Authentication</div>
         <div class="grid grid-cols-2 gap-4">
@@ -84,7 +67,6 @@ new #[Layout('layouts.guest')] class extends Component
             </a>
         </div>
     </div>
-
     <div class="text-center">
         <p class="text-[10px] sentry-label opacity-40">
             No identity? <a href="{{ route('register') }}" wire:navigate class="text-sentry-purple hover:text-sentry-light transition-colors">Apply for Citizenship</a>

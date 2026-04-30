@@ -1,16 +1,12 @@
 <?php
-
 namespace Database\Seeders;
-
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
-
 class RealCardSeeder extends Seeder
 {
     const CDN = 'https://cdn.piltoverarchive.com/cards/';
-
     public function run(): void
     {
         $c = Category::pluck('id', 'name');
@@ -19,18 +15,13 @@ class RealCardSeeder extends Seeder
         $zau = $c['Zaun'];       $bil = $c['Bilgewater'];   $ban = $c['Bandle City'];
         $voi = $c['Void'];       $tar = $c['Targon'];       $shu = $c['Shurima'];
         $ixt = $c['Ixtal'];      $neu = $c['Neutral'];
-
-        // [ID, Name, Category, Rarity, Energy, Power, Might, Description, Price, Stock]
         $cards = [
-            // ── ARCANE BOX SET (Verified via Screenshots) ─────────────────────
             ['ARC-001', 'Vi, Destructive', $plt, 'legendary', 2, 1, 3, "GANKING (I can move from battlefield to battlefield.)\nRecycle 1 from your trash: Give me +1 Might this turn.", 18.99, 22],
             ['ARC-002', 'Caitlyn, Patrolling', $plt, 'legendary', 3, 1, 3, "I must be assigned combat damage last.\n[TAP]: Deal damage equal to my Might to a unit at a battlefield. Use this ability only while I'm at a battlefield.", 21.99, 17],
             ['ARC-003', 'Heimerdinger, Inventor', $plt, 'legendary', 3, 1, 3, "[TAP]: Give me +1 Power this turn. When you play a spell, ready me.", 20.99, 18],
             ['ARC-004', 'Warwick, Hunter', $zau, 'legendary', 6, 2, 5, "When I'm at a battlefield, units at that battlefield have -1 Might.", 21.99, 17],
             ['ARC-005', 'Jinx, Rebel', $zau, 'legendary', 5, 2, 5, "When I'm at a battlefield, [TAP]: Deal 2 damage to all units at that battlefield.", 29.99, 12],
             ['ARC-006', 'Viktor, Leader', $zau, 'legendary', 4, 1, 4, "When I'm at a battlefield, you can play spells at that battlefield for 1 less Energy.", 25.99, 13],
-            
-            // ── ORIGINS SET (Verified via Screenshots) ────────────────────────
             ['OGN-001', 'Blazing Scorcher', $nox, 'common', 5, 0, 5, "ACCELERATE (You may pay 1 Energy as an additional cost to have me enter ready.)", 7.99, 40],
             ['OGN-002', 'Brazen Buccaneer', $bil, 'common', 6, 0, 5, "As you play me, you may discard a card as an additional cost. If you do, reduce my cost by 2.", 5.49, 55],
             ['OGN-003', 'Chemtech Enforcer', $nox, 'common', 4, 0, 5, "I have +1 Might for each of your other Chemtech units.", 2.99, 80],
@@ -382,7 +373,6 @@ class RealCardSeeder extends Seeder
             ['STD-024', 'Rell (STD)', $nox, 'legendary', 4, 4, 5, "CHALLENGER. ATTRACT (Enemies must block me if possible).", 22.99, 14],
             ['STD-025', 'Twin Disciplines', $ion, 'common', 2, 0, 0, "[REACTION] Give an ally +2 Power or +3 Might this turn.", 1.99, 140],
         ];
-
         foreach ($cards as [$id, $name, $cat, $rarity, $energy, $power, $might, $desc, $price, $stock]) {
             Product::updateOrCreate(
                 ['card_id' => $id],
@@ -405,7 +395,6 @@ class RealCardSeeder extends Seeder
                 ]
             );
         }
-
         $this->command->info('Seeded ' . count($cards) . ' verified Riftbound cards.');
     }
 }

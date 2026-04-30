@@ -1,9 +1,7 @@
 <?php
-
 use App\Models\Order;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
-
 new #[Layout('layouts.app')] class extends Component
 {
     public function getOrdersProperty()
@@ -11,14 +9,12 @@ new #[Layout('layouts.app')] class extends Component
         return auth()->user()->orders()->latest()->get();
     }
 }; ?>
-
 <div class="py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-10">
             <h1 class="font-display text-4xl font-bold text-white mb-2">Acquisition History</h1>
             <p class="text-sentry-light opacity-60 uppercase tracking-[2px] text-xs">All deployments to your collection</p>
         </div>
-
         @if($this->orders->isEmpty())
             <div class="sentry-glass p-16 text-center">
                 <div class="w-20 h-20 bg-sentry-deep border border-sentry-border rounded-full mx-auto flex items-center justify-center mb-6">
@@ -57,14 +53,12 @@ new #[Layout('layouts.app')] class extends Component
                                     </div>
                                 </div>
                             </div>
-
                             <div class="flex items-center gap-4">
                                 <a href="{{ route('orders.show', $order) }}" wire:navigate class="btn-sentry-secondary px-6 py-2 text-xs">
                                     View Dossier
                                 </a>
                             </div>
                         </div>
-                        
                         <!-- Mini items preview -->
                         <div class="bg-sentry-darker/50 border-t border-sentry-border px-6 py-4 flex gap-4 overflow-x-auto">
                             @foreach($order->items->take(5) as $item)

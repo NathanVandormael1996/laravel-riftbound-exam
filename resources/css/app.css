@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer base {
     :root {
         --sentry-deep: #1f1633;
@@ -14,47 +13,36 @@
         --sentry-coral: #ffb287;
         --sentry-pink: #fa7faa;
     }
-
     body {
         @apply bg-sentry-darker text-sentry-light selection:bg-sentry-purple selection:text-white;
     }
 }
-
 @layer components {
     .sentry-card {
         @apply bg-sentry-deep border border-sentry-border rounded-xl overflow-hidden shadow-2xl;
     }
-
     .sentry-glass {
         @apply bg-sentry-deep/40 backdrop-blur-xl border border-sentry-border rounded-2xl;
     }
-
     .sentry-input {
         @apply bg-sentry-darker border-sentry-border text-white rounded-lg focus:ring-2 focus:ring-sentry-purple focus:border-transparent transition-all placeholder:text-sentry-muted;
     }
-
     .sentry-label {
         @apply uppercase font-bold tracking-[3px] text-sentry-muted text-[10px];
     }
-
     .btn-sentry-primary {
         @apply bg-sentry-purple hover:bg-sentry-violet text-white font-bold rounded-lg transition-all duration-300 transform active:scale-95 shadow-lg shadow-sentry-purple/20 flex items-center justify-center gap-2;
     }
-
     .btn-sentry-secondary {
         @apply bg-transparent border border-sentry-purple text-sentry-purple hover:bg-sentry-purple hover:text-white font-bold rounded-lg transition-all duration-300 flex items-center justify-center gap-2;
     }
-
     .btn-sentry-white {
         @apply bg-white hover:bg-sentry-light text-sentry-deep font-bold rounded-lg transition-all duration-300 transform active:scale-95 shadow-lg flex items-center justify-center gap-2;
     }
-
     .sentry-badge {
         @apply px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border border-sentry-border bg-sentry-deep/80 backdrop-blur-sm;
     }
 }
-
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -64,14 +52,11 @@
 ::-webkit-scrollbar-thumb {
     @apply bg-sentry-border rounded-full hover:bg-sentry-purple transition-colors;
 }
-
-/* Animations */
 @keyframes float {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
 }
-
 .animate-float {
     animation: float 6s ease-in-out infinite;
 }

@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Enums;
-
 enum ProductBadge: string
 {
     case NONE = 'none';

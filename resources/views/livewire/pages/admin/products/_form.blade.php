@@ -4,11 +4,8 @@
     $subtitle = $isEdit ? 'Update card details, pricing and availability.' : 'Add a new card to the Riftbound marketplace.';
     $action = $isEdit ? 'Update Card' : 'Deploy to Marketplace';
 @endphp
-
 <div class="min-h-screen py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {{-- Breadcrumb + Header --}}
         <div class="mb-10">
             <div class="flex items-center gap-2 mb-4">
                 <a href="{{ route('admin.dashboard') }}" class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-30 hover:opacity-70 transition-opacity">Command Center</a>
@@ -20,10 +17,7 @@
             <h1 class="font-display text-5xl font-bold text-white">{{ $title }}</h1>
             <p class="mt-2 text-sentry-light opacity-50 text-sm">{{ $subtitle }}</p>
         </div>
-
         <form wire:submit="save" class="space-y-6">
-
-            {{-- Core Details --}}
             <div class="bg-sentry-darker border border-sentry-border rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
                 <div class="px-6 py-4 border-b border-sentry-border/50 bg-sentry-deep/40 flex items-center gap-3">
                     <div class="w-1.5 h-1.5 rounded-full bg-sentry-light"></div>
@@ -46,7 +40,6 @@
                             @error('form.slug') <p class="font-mono text-[10px] text-sentry-pink">{{ $message }}</p> @enderror
                         </div>
                     </div>
-
                     <div class="space-y-2">
                         <label class="block font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-50">Lore & Description</label>
                         <textarea wire:model="form.description" rows="4"
@@ -54,7 +47,6 @@
                                   placeholder="The strength of Noxus lies not in the size of its army..."></textarea>
                         @error('form.description') <p class="font-mono text-[10px] text-sentry-pink">{{ $message }}</p> @enderror
                     </div>
-
                     <div class="space-y-2">
                         <label class="block font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-50">Card Image</label>
                         <input wire:model="form.newImage" type="file"
@@ -72,8 +64,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- Pricing & Inventory --}}
             <div class="bg-sentry-darker border border-sentry-border rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
                 <div class="px-6 py-4 border-b border-sentry-border/50 bg-sentry-deep/40 flex items-center gap-3">
                     <div class="w-1.5 h-1.5 rounded-full bg-sentry-light"></div>
@@ -110,8 +100,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- Meta --}}
             <div class="bg-sentry-darker border border-sentry-border rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
                 <div class="px-6 py-4 border-b border-sentry-border/50 bg-sentry-deep/40 flex items-center gap-3">
                     <div class="w-1.5 h-1.5 rounded-full bg-sentry-purple"></div>
@@ -128,7 +116,6 @@
                                 @endforeach
                             </select>
                         </div>
-
                         <label class="flex items-center gap-3 cursor-pointer group pt-5">
                             <div class="relative">
                                 <input wire:model="form.is_active" type="checkbox" id="is_active" class="sr-only peer">
@@ -137,7 +124,6 @@
                             </div>
                             <span class="font-mono text-[11px] uppercase tracking-[1.5px] text-sentry-light opacity-60 group-hover:opacity-100 transition-opacity">Active in Shop</span>
                         </label>
-
                         <label class="flex items-center gap-3 cursor-pointer group pt-5">
                             <div class="relative">
                                 <input wire:model="form.is_featured" type="checkbox" id="is_featured" class="sr-only peer">
@@ -149,8 +135,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- Actions --}}
             <div class="flex items-center justify-between pt-2">
                 <a href="{{ route('admin.products.index') }}"
                    class="font-mono text-[11px] uppercase tracking-[2px] text-sentry-light opacity-40 hover:opacity-80 transition-opacity flex items-center gap-2">
@@ -162,7 +146,6 @@
                     {{ $action }}
                 </button>
             </div>
-
         </form>
     </div>
 </div>
