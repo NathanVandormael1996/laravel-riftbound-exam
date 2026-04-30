@@ -1,27 +1,37 @@
+# --- Project Specific ---
 /node_modules
+/vendor
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
-/vendor
 .env
 .env.backup
 .env.production
 .phpunit.result.cache
+/.phpunit.cache
 docker-compose.override.yml
 user.ini
+auth.json
+
+# --- OS & IDE ---
 /.idea
 /.vscode
 .DS_Store
-auth.json
 npm-debug.log
 yarn-error.log
-/.phpunit.cache
-/node_modules
-/vendor
-.env
-.env.backup
-.env.production
-.phpunit.result.cache
-docker-compose.override.yml
-user.ini
+
+# --- Laravel Storage Structure Rules ---
+# This ignores the files/junk but keeps the folders in Git
+/storage/app/public/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+
+# Exceptions: Allow Git to track .gitkeep files so folders are created on clone
+!storage/app/public/.gitkeep
+!storage/framework/cache/.gitkeep
+!storage/framework/sessions/.gitkeep
+!storage/framework/views/.gitkeep
+!storage/logs/.gitkeep
