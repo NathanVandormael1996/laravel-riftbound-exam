@@ -12,7 +12,7 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::view('profile', 'profile')
+Route::livewire('profile', 'pages.user')
     ->middleware(['auth'])
     ->name('profile');
 
