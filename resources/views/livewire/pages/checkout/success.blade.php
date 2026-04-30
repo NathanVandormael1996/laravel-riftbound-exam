@@ -14,6 +14,27 @@ new #[Layout('layouts.app')] class extends Component
     {
         $this->order = $order;
         
+        // Authorization check: Only the owner of the order can see the success page
+        if ($this->order->user_id && $this->order->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to order dossier.');
+        }
+
+        // Retrieve and store Stripe details if present in the URL
+        $sessionId = request()->query('session_id');
+        if ($sessionId && !$this->order->stripe_payment_intent_id) {
+            try {
+                $stripeService = app(\App\Services\StripeService::class);
+                $session = \Stripe\Checkout\Session::retrieve($sessionId);
+                $this->order->update([
+                    'stripe_session_id' => $sessionId,
+                    'stripe_payment_intent_id' => $session->payment_intent,
+                ]);
+            } catch (\Exception $e) {
+                // Silently fail if session retrieval fails in dev environment
+                \Illuminate\Support\Facades\Log::warning('Stripe session retrieval failed: ' . $e->getMessage());
+            }
+        }
+
         // In a real implementation, we would verify the Stripe session here
         // and update the status. For now, we'll just mark it as PAID for demo purposes.
         if ($this->order->status === OrderStatus::PENDING) {
