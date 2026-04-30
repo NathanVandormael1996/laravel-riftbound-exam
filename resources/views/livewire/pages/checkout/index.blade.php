@@ -1,6 +1,4 @@
 <?php
-
-
 use App\Actions\Orders\CreateOrderAction;
 use App\Actions\Checkout\CreateCheckoutSessionAction;
 use App\Services\CartService;
@@ -8,43 +6,30 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
-
 new #[Layout('layouts.app')] class extends Component
 {
-    #[Validate('required|string|max:255')]
     public $billing_name = '';
-
-    #[Validate('required|email|max:255')]
     public $billing_email = '';
-
-    #[Validate('required|string|max:500')]
     public $billing_address = '';
-
     public $shipping_name = '';
     public $shipping_address = '';
-
     public function mount()
     {
         if (auth()->check()) {
             $this->billing_name = auth()->user()->name;
             $this->billing_email = auth()->user()->email;
         }
-
         if (app(CartService::class)->getCart()->items->isEmpty()) {
             return redirect()->route('cart.index');
         }
     }
-
-    #[Computed]
     public function cart()
     {
         return app(CartService::class)->getCart()->load('items.product');
     }
-
     public function submit(CreateOrderAction $createOrder, CreateCheckoutSessionAction $createSession)
     {
         $this->validate();
-
         $order = $createOrder->handle($this->cart, [
             'billing_name' => $this->billing_name,
             'billing_email' => $this->billing_email,
@@ -52,20 +37,14 @@ new #[Layout('layouts.app')] class extends Component
             'shipping_name' => $this->shipping_name ?: $this->billing_name,
             'shipping_address' => $this->shipping_address ?: $this->billing_address,
         ]);
-
         $redirectUrl = $createSession->handle($order);
-
-        // Clear cart after order creation (or wait for webhook in real life)
         app(CartService::class)->clear();
-
         return redirect($redirectUrl);
     }
 }; ?>
-
 <div class="py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="font-display text-4xl font-bold mb-8">Secure Checkout</h1>
-
         <form wire:submit="submit" class="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <!-- Form Section -->
             <div class="lg:col-span-2 space-y-12">
@@ -89,7 +68,6 @@ new #[Layout('layouts.app')] class extends Component
                         </div>
                     </div>
                 </section>
-
                 <section class="space-y-6">
                     <h2 class="sentry-label">Shipping Details (Optional)</h2>
                     <p class="text-xs text-sentry-light opacity-50 italic mb-4">Leave blank if same as billing.</p>
@@ -105,12 +83,10 @@ new #[Layout('layouts.app')] class extends Component
                     </div>
                 </section>
             </div>
-
             <!-- Summary & Payment -->
             <aside class="space-y-6">
                 <div class="sentry-card p-6 space-y-6">
                     <h2 class="sentry-label">Your Selection</h2>
-                    
                     <div class="space-y-4 max-h-60 overflow-y-auto pr-2">
                         @foreach($this->cart->items as $item)
                             <div class="flex justify-between items-center text-sm">
@@ -122,25 +98,21 @@ new #[Layout('layouts.app')] class extends Component
                             </div>
                         @endforeach
                     </div>
-
                     <div class="border-t border-sentry-border pt-4 space-y-2">
                         <div class="flex justify-between items-end">
                             <span class="text-sm font-bold uppercase tracking-tight">Order Total</span>
                             <span class="text-3xl font-mono font-bold text-sentry-light">€{{ number_format($this->cart->total, 2) }}</span>
                         </div>
                     </div>
-
                     <button type="submit" class="w-full btn-sentry-primary py-5 text-lg flex items-center justify-center space-x-3 group">
                         <span>Confirm & Pay</span>
                         <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </button>
-
                     <div class="text-center flex items-center justify-center space-x-2 text-sentry-light opacity-50 hover:opacity-100 transition-all cursor-default">
                         <span class="text-[10px] uppercase tracking-[2px] font-bold">Powered by</span>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" class="h-4 filter brightness-0 invert">
                     </div>
                 </div>
-
                 <div class="sentry-glass p-4">
                     <div class="flex items-start space-x-3">
                         <div class="text-sentry-light">

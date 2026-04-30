@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Enums;
-
 enum OrderStatus: string
 {
     case PENDING = 'pending';
@@ -10,6 +8,5 @@ enum OrderStatus: string
     case DELIVERED = 'delivered';
     case CANCELLED = 'cancelled';
     case COMPLETED = 'completed';
-
     case REFUNDED = 'refunded';
 }

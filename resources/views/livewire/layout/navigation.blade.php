@@ -1,8 +1,7 @@
 <?php
-
 use App\Livewire\Actions\Logout;
+use Livewire\Attributes\Computed;
 use Livewire\Volt\Component;
-
 new class extends Component
 {
     public function logout(Logout $logout): void
@@ -10,15 +9,12 @@ new class extends Component
         $logout();
         $this->redirect('/', navigate: true);
     }
-
-    #[\Livewire\Attributes\Computed]
-    #[\Livewire\Attributes\On('notify')]
+    #[Computed]
     public function cartCount()
     {
         return app(\App\Services\CartService::class)->getCart()->item_count;
     }
 }; ?>
-
 <nav x-data="{ open: false }" class="bg-sentry-darker border-b border-sentry-border sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
@@ -30,7 +26,6 @@ new class extends Component
                         <span class="font-display text-2xl font-bold tracking-tight text-white">Riftbound</span>
                     </a>
                 </div>
-
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <a href="/" wire:navigate class="sentry-label hover:text-white transition-colors {{ request()->is('/') ? 'text-white border-b-2 border-sentry-light pb-1' : '' }}">
@@ -49,7 +44,6 @@ new class extends Component
                     @endauth
                 </div>
             </div>
-
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
                 <!-- Collection Basket Link -->
                 <a href="{{ route('cart.index') }}" wire:navigate class="relative p-2 text-sentry-light hover:text-white transition-colors group">
@@ -60,7 +54,6 @@ new class extends Component
                         </span>
                     @endif
                 </a>
-
                 @auth
                     <div class="flex items-center space-x-4">
                         <div class="text-right">
@@ -80,7 +73,6 @@ new class extends Component
                     </a>
                 @endauth
             </div>
-
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-sentry-light hover:text-white transition duration-150 ease-in-out">
@@ -92,7 +84,6 @@ new class extends Component
             </div>
         </div>
     </div>
-
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-sentry-darker border-t border-sentry-border">
         <div class="pt-2 pb-3 space-y-1">
@@ -110,7 +101,6 @@ new class extends Component
                 @endif
             @endauth
         </div>
-
         <div class="pt-4 pb-1 border-t border-sentry-border">
             @auth
                 <div class="px-4 py-3">

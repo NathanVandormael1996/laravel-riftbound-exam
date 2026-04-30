@@ -1,30 +1,23 @@
 <?php
-
-
 use App\Models\Order;
 use App\Enums\OrderStatus;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
-
 new #[Layout('layouts.app')] class extends Component
 {
     public Order $order;
-
     public function mount(Order $order)
     {
         $this->order = $order->load('items.product');
     }
-
     public function updateStatus(string $status)
     {
         $this->order->update(['status' => $status]);
         $this->dispatch('notify', ['type' => 'success', 'message' => "Order status updated to {$status}."]);
     }
-
     public function refundOrder()
     {
         \Illuminate\Support\Facades\Log::info('Refund process started for order: ' . $this->order->order_number);
-
         if (!$this->order->stripe_payment_intent_id) {
             \Illuminate\Support\Facades\Log::warning('Refund failed: No payment intent ID.');
             $this->dispatch('notify', [
@@ -33,42 +26,32 @@ new #[Layout('layouts.app')] class extends Component
             ]);
             return;
         }
-
         $success = app(\App\Services\StripeService::class)->refundOrder($this->order);
-
         if ($success) {
             $this->order->update(['status' => OrderStatus::REFUNDED]);
-            
-            // Restock items
             foreach ($this->order->items as $item) {
                 if ($item->product) {
                     $item->product->increment('stock', $item->quantity);
                 }
             }
-
             $this->dispatch('notify', ['type' => 'success', 'message' => 'Order successfully refunded. Items restocked.']);
         } else {
             $this->dispatch('notify', ['type' => 'error', 'message' => 'Failed to process refund through Stripe. Check your API keys and connection.']);
         }
     }
 }; ?>
-
 <div class="min-h-screen py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {{-- Header --}}
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-10">
             <div>
                 <div class="flex items-center gap-2 mb-4">
-                    <a href="{{ route('admin.orders.index') }}" class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-30 hover:opacity-70 transition-opacity">Acquisition Log</a>
+                    <a href="{{ route('admin.orders.index') }}" wire:navigate class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-30 hover:opacity-70 transition-opacity">Acquisition Log</a>
                     <span class="text-sentry-border">/</span>
                     <span class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-80">{{ $this->order->order_number }}</span>
                 </div>
                 <h1 class="font-display text-5xl font-bold text-white">Order Details</h1>
                 <p class="mt-2 font-mono text-sm text-sentry-light opacity-40 tracking-wider">{{ $this->order->created_at->format('F j, Y — H:i') }}</p>
             </div>
-
-            {{-- Status Switcher --}}
             <div class="flex flex-wrap items-center gap-4">
                 <div class="flex flex-wrap items-center gap-2">
                     <span class="font-mono text-[10px] uppercase tracking-[2px] text-sentry-light opacity-40 mr-1">Status:</span>
@@ -85,8 +68,6 @@ new #[Layout('layouts.app')] class extends Component
                         </button>
                     @endforeach
                 </div>
-
-                {{-- Refund Button --}}
                 @if($this->order->status === \App\Enums\OrderStatus::PAID)
                     <div class="h-8 w-[1px] bg-sentry-border mx-2"></div>
                     <button 
@@ -101,10 +82,7 @@ new #[Layout('layouts.app')] class extends Component
                 @endif
             </div>
         </div>
-
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-            {{-- Line Items --}}
             <div class="lg:col-span-2">
                 <h2 class="font-mono text-[11px] uppercase tracking-[3px] text-sentry-light opacity-50 mb-5">Ordered Cards</h2>
                 <div class="bg-sentry-darker border border-sentry-border rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
@@ -152,11 +130,7 @@ new #[Layout('layouts.app')] class extends Component
                     </table>
                 </div>
             </div>
-
-            {{-- Sidebar --}}
             <div class="space-y-5">
-
-                {{-- Client --}}
                 <div>
                     <h2 class="font-mono text-[11px] uppercase tracking-[3px] text-sentry-light opacity-50 mb-4">Client Identity</h2>
                     <div class="bg-sentry-darker border border-sentry-border rounded-xl p-5 shadow-[0_10px_30px_rgba(0,0,0,0.3)] space-y-4">
@@ -170,8 +144,6 @@ new #[Layout('layouts.app')] class extends Component
                         </div>
                     </div>
                 </div>
-
-                {{-- Shipping --}}
                 <div>
                     <h2 class="font-mono text-[11px] uppercase tracking-[3px] text-sentry-light opacity-50 mb-4">Delivery Coordinates</h2>
                     <div class="bg-sentry-darker border border-sentry-border rounded-xl p-5 shadow-[0_10px_30px_rgba(0,0,0,0.3)] space-y-4">
@@ -185,8 +157,6 @@ new #[Layout('layouts.app')] class extends Component
                         </div>
                     </div>
                 </div>
-
-                {{-- Meta --}}
                 <div class="bg-sentry-darker border border-sentry-border rounded-xl p-5 shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
                     <div class="space-y-3">
                         <div class="flex justify-between items-center">
@@ -199,7 +169,6 @@ new #[Layout('layouts.app')] class extends Component
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

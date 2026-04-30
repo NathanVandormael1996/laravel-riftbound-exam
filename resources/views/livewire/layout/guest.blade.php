@@ -4,13 +4,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <title>{{ config('app.name', 'Laravel') }}</title>
-
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -24,7 +21,6 @@
                     <span class="font-display text-2xl font-bold tracking-tight text-white uppercase tracking-[4px]">Riftbound</span>
                 </a>
             </div>
-
             <div class="w-full sm:max-w-md mt-6 px-10 py-12 bg-sentry-darker border border-sentry-border shadow-[0_20px_60px_rgba(0,0,0,0.5)] overflow-hidden sm:rounded-2xl">
                 {{ $slot }}
             </div>
